@@ -42,7 +42,6 @@
                     <div class="input-wrapper source-wrapper">
                         <i class='bx bx-map-pin'></i>
                         <input type="text" id="source" placeholder="e.g. Majestic (KBS)" autocomplete="off">
-                        <button class="btn-gps" id="btn-gps" title="Get GPS Location" type="button"><i class='bx bx-current-location'></i></button>
                         <div class="autocomplete-dropdown" id="source-dropdown"></div>
                     </div>
                 </div>
@@ -84,7 +83,7 @@
                 <div id="male-categories" style="display: none; margin-bottom: 1rem;">
                     <label style="color: var(--text-secondary); font-weight: 500; font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Passenger Age Category</label>
                     <div class="chip-container" style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
-                        <button class="chip-tab category-tab active" data-cat="child">Child (6-11)</button>
+                        <button class="chip-tab category-tab" data-cat="child">Child (6-11)</button>
                         <button class="chip-tab category-tab" data-cat="senior">Senior (≥60)</button>
                     </div>
                 </div>
@@ -212,7 +211,7 @@
                 <button class="close-modal" id="close-payment-modal"><i class='bx bx-x'></i></button>
             </div>
             <div class="modal-body" style="text-align: center;">
-                <p style="color: var(--text-secondary); margin-bottom: 5px; font-size: 0.9rem;">Total Fare (Calculated via GPS Distance)</p>
+                <p style="color: var(--text-secondary); margin-bottom: 5px; font-size: 0.9rem;">Total Fare</p>
                 <h1 class="price" id="payment-amount" style="font-size: 2.5rem; margin-bottom: 20px;">₹0</h1>
                 
                 <div class="qr-payment-box">

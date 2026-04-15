@@ -66,8 +66,7 @@ let capturedAadhaar = '';
 let selectedGender = 'female';
 let selectedCategory = 'adult';
 
-// Payment & GPS Variables
-const btnGps = document.getElementById('btn-gps');
+// Payment Variables
 const paymentModal = document.getElementById('payment-modal');
 const closePaymentModal = document.getElementById('close-payment-modal');
 const paymentAmountLabel = document.getElementById('payment-amount');
@@ -516,61 +515,6 @@ function setupAutocomplete(inputElement, dropdownElement) {
 
 setupAutocomplete(sourceInput, sourceDropdown);
 setupAutocomplete(destInput, destDropdown);
-
-// GPS Button Logic
-btnGps.addEventListener('click', () => {
-    // Add small animation feedback
-    btnGps.style.transform = 'scale(0.9)';
-    btnGps.innerHTML = "<i class='bx bx-loader bx-spin'></i>";
-
-    // Helper to reset button
-    const resetGpsButton = (useRandom = false) => {
-        btnGps.style.transform = '';
-        btnGps.innerHTML = "<i class='bx bx-current-location'></i>";
-        if (useRandom) {
-            const randomHub = bmtcHubs[Math.floor(Math.random() * bmtcHubs.length)];
-            sourceInput.value = randomHub;
-        }
-        paymentDoneForCurrentJourney = false;
-        resultsContainer.classList.remove('active');
-    };
-
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(position => {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-
-            // Use reverse geocoding API to get address
-            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
-                .then(res => res.json())
-                .then(data => {
-                    btnGps.style.transform = '';
-                    btnGps.innerHTML = "<i class='bx bx-current-location'></i>";
-
-                    let address = 'Unknown Location';
-                    if (data && data.address) {
-                        address = data.address.suburb || data.address.city_district || data.address.road || data.display_name.split(',')[0];
-                        // Add a default suffix logic to make it look like a bus stop
-                        if (!address.toLowerCase().includes('stop') && !address.toLowerCase().includes('stage') && !address.toLowerCase().includes('layout')) {
-                            address += " (Stop)";
-                        }
-                    }
-                    sourceInput.value = address;
-                    paymentDoneForCurrentJourney = false;
-                    resultsContainer.classList.remove('active');
-                })
-                .catch(() => {
-                    // Fallback to old random hub if api fails
-                    resetGpsButton(true);
-                });
-        }, () => {
-            // Permission denied or error
-            resetGpsButton(true);
-        }, { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 });
-ge    } else {
-        resetGpsButton(true);
-    }
-});
 
 // Reset payment status when destination changes
 destInput.addEventListener('input', () => {
